@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meet the dedicated team of mental health professionals at ReThink Mental Health. Our experienced psychiatrists, therapists, and wellness specialists are committed to your care.">
+    <meta name="keywords" content="Mental health team, Psychiatrists Denver, Ketamine specialists, Mental health professionals, ReThink Mental Health team">
+    <title>Our Team | ReThink Mental Health</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles specific to team page */
+        .page-header {
+            background: linear-gradient(rgba(0, 68, 69, 0.8), rgba(0, 68, 69, 0.8)), url('../images/team-header.jpg');
+            background-size: cover;
+            background-position: center;
+            color: var(--neutral-100);
+            padding: var(--spacing-xxl) 0;
+            text-align: center;
+        }
+        
+        .page-header h2 {
+            color: var(--neutral-100);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .team-intro {
+            max-width: 800px;
+            margin: 0 auto var(--spacing-xl);
+            text-align: center;
+        }
+        
+        .team-categories {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+        
+        .team-category {
+            padding: 0.5rem 1.5rem;
+            background-color: var(--neutral-200);
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+        
+        .team-category.active {
+            background-color: var(--primary-color);
+            color: var(--neutral-100);
+        }
+        
+        .team-category:hover {
+            background-color: var(--primary-light);
+            color: var(--neutral-100);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xxl);
+        }
+        
+        .team-member {
+            background-color: var(--neutral-100);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .team-photo {
+            height: 300px;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neutral-100);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-info {
+            padding: var(--spacing-lg);
+        }
+        
+        .team-name {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .team-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            display: block;
+        }
+        
+        .team-bio {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .team-credentials {
+            font-style: italic;
+            color: var(--neutral-600);
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .team-specialties {
+            margin-top: var(--spacing-md);
+        }
+        
+        .team-specialties h4 {
+            font-size: 1rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .specialty-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+        }
+        
+        .specialty-tag {
+            background-color: var(--primary-light);
+            color: var(--neutral-100);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.8rem;
+        }
+        
+        .team-social {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .team-social a {
+            width: 36px;
+            height: 36px;
+            background-color: var(--neutral-200);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+            transition: all var(--transition-normal);
+        }
+        
+        .team-social a:hover {
+            background-color: var(--primary-color);
+            color: var(--neutral-100);
+        }
+        
+        .team-section {
+            padding: var(--spacing-xxl) 0;
+        }
+        
+        .team-section:nth-child(even) {
+            background-color: var(--neutral-200);
+        }
+        
+        @media (max-width: 1024px) {
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-categories {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>ReThink Mental Health</h1>
+                </a>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="services.html">Services <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="services.html#psychiatric">Psychiatric Services</a></li>
+                            <li><a href="services.html#ketamine">Ketamine Therapy</a></li>
+                            <li><a href="services.html#spravato">Spravato Treatment</a></li>
+                            <li><a href="services.html#first-responder">First Responder Care</a></li>
+                            <li><a href="services.html#testing">Testing & Diagnostics</a></li>
+                            <li><a href="services.html#addiction">Addiction Treatment</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="wellness.html">Wellness <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="wellness.html#injections">Wellness Injections</a></li>
+                            <li><a href="wellness.html#nutrition">Nutrition Counseling</a></li>
+                            <li><a href="https://fullscript.com/rethinkmentalhealth" target="_blank">Fullscript</a></li>
+                            <li><a href="https://thorne.com" target="_blank">Thorne</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="team.html">Our Team</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="reviews.html" class="review-btn">Leave a Review</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h2>Meet Our Team</h2>
+            <p>Dedicated professionals committed to your mental health and wellness</p>
+        </div>
+    </section>
+
+    <section class="team-intro">
+        <div class="container">
+            <h2 class="section-title">Our Compassionate Experts</h2>
+            <p>At ReThink Mental Health, our team consists of highly trained professionals with diverse backgrounds and specialties. We work collaboratively to provide comprehensive, personalized care that addresses your unique needs.</p>
+            <p>Each member of our team is committed to staying at the forefront of mental health care, continuously updating their knowledge and skills to offer you the most effective treatments available.</p>
+        </div>
+    </section>
+
+    <section class="team-section" id="leadership">
+        <div class="container">
+            <h2 class="section-title">Leadership Team</h2>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Dr. Sarah Johnson Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Dr. Sarah Johnson, MD</h3>
+                        <span class="team-title">Founder & Medical Director</span>
+                        <p class="team-credentials">Board Certified in Psychiatry, Fellowship in Integrative Medicine</p>
+                        <p class="team-bio">Dr. Johnson founded ReThink Mental Health with a vision to transform mental health care through an integrative approach. With over 15 years of experience in psychiatry, she specializes in treatment-resistant mood disorders and PTSD, with particular expertise in ketamine therapy and other innovative treatments.</p>
+                        <p class="team-bio">Prior to founding ReThink, Dr. Johnson served as the Chief of Psychiatry at Denver Memorial Hospital and has published numerous research papers on integrative approaches to mental health.</p>
+                        <div class="team-specialties">
+                            <h4>Specialties:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Ketamine Therapy</span>
+                                <span class="specialty-tag">Treatment-Resistant Depression</span>
+                                <span class="specialty-tag">PTSD</span>
+                                <span class="specialty-tag">Integrative Psychiatry</span>
+                            </div>
+                        </div>
+                        <div class="team-social">
+                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Dr. Michael Chen Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Dr. Michael Chen, MD</h3>
+                        <span class="team-title">Clinical Director</span>
+                        <p class="team-credentials">Board Certified in Psychiatry, Addiction Medicine</p>
+                        <p class="team-bio">Dr. Chen oversees the clinical operations at ReThink Mental Health, ensuring that all patients receive the highest quality care. He specializes in addiction psychiatry and co-occurring disorders, bringing a wealth of experience in treating complex cases.</p>
+                        <p class="team-bio">With a background in both academic and clinical settings, Dr. Chen is passionate about implementing evidence-based practices while remaining open to innovative approaches that can benefit patients who haven't responded to traditional treatments.</p>
+                        <div class="team-specialties">
+                            <h4>Specialties:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Addiction Medicine</span>
+                                <span class="specialty-tag">Co-occurring Disorders</span>
+                                <span class="specialty-tag">Medication Management</span>
+                                <span class="specialty-tag">Spravato Treatment</span>
+                            </div>
+                        </div>
+                        <div class="team-social">
+                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Lisa Rodriguez Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Lisa Rodriguez, MSN, PMHNP-BC</h3>
+                        <span class="team-title">Director of Wellness Services</span>
+                        <p class="team-credentials">Psychiatric Mental Health Nurse Practitioner, Certified in Functional Medicine</p>
+                        <p class="team-bio">Lisa leads our wellness initiatives, bringing together her expertise in psychiatric care and functional medicine. She developed our comprehensive wellness program, including nutritional counseling and micronutrient therapy protocols.</p>
+                        <p class="team-bio">With a holistic approach to mental health, Lisa is dedicated to addressing the underlying factors that contribute to mental health conditions, helping patients achieve sustainable wellness through lifestyle modifications and targeted interventions.</p>
+                        <div class="team-specialties">
+                            <h4>Specialties:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Functional Medicine</span>
+                                <span class="specialty-tag">Nutritional Psychiatry</span>
+                                <span class="specialty-tag">Hormone Balance</span>
+                                <span class="specialty-tag">Wellness Injections</span>
+                            </div>
+                        </div>
+                        <div class="team-social">
+                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section" id="psychiatrists">
+        <div class="container">
+            <h2 class="section-title">Psychiatrists & Psychiatric Providers</h2>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Dr. James Wilson Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Dr. James Wilson, MD</h3>
+                        <span class="team-title">Psychiatrist</span>
+                        <p class="team-credentials">Board Certified in Psychiatry, Specialization in First Responder Mental Health</p>
+                        <p class="team-bio">Dr. Wilson specializes in treating first responders, military personnel, and frontline healthcare workers. With a background as a military psychiatrist, he brings unique insight into the mental health challenges faced by these communities.</p>
+                        <p class="team-bio">His approach combines evidence-based treatments with a deep understanding of the cultural contexts and specific stressors that affect these populations, creating a safe and effective treatment environment.</p>
+                        <div class="team-specialties">
+                            <h4>Specialties:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">First Responder Care</span>
+                                <span class="specialty-tag">PTSD</span>
+                                <span class="specialty-tag">Trauma-Informed Care</span>
+                                <span class="specialty-tag">Resilience Building</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Dr. Aisha Patel Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Dr. Aisha Patel, MD</h3>
+                        <span class="team-title">Psychiatrist</span>
+                        <p class="team-credentials">Board Certified in Psychiatry and Child & Adolescent Psychiatry</p>
+                        <p class="team-bio">Dr. Patel specializes in child, adolescent, and young adult psychiatry, bringing a developmental perspective to mental health care. She is skilled in diagnosing and treating conditions that often first appear in childhood and adolescence.</p>
+                        <p class="team-bio">With a warm, engaging approach, Dr. Patel creates a comfortable environment for young patients and their families, helping them navigate the challenges of mental health conditions during crucial developmental periods.</p>
+                        <div class="team-specialties">
+                            <h4>Specialties:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Child & Adolescent Psychiatry</span>
+                                <span class="specialty-tag">ADHD</span>
+                                <span class="specialty-tag">Anxiety Disorders</span>
+                                <span class="specialty-tag">Family Therapy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Robert Thompson Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Robert Thompson, PA-C</h3>
+                        <span class="team-title">Psychiatric Physician Assistant</span>
+                        <p class="team-credentials">Certified Physician Assistant, Specialized Training in Psychiatric Care</p>
+                        <p class="team-bio">Robert provides comprehensive psychiatric evaluations, medication management, and follow-up care for adults with a wide range of mental health conditions. He takes a collaborative approach to treatment, working closely with patients to develop personalized care plans.</p>
+                        <p class="team-bio">With a background in primary care before specializing in psychiatry, Robert brings a holistic perspective to mental health, considering both physical and psychological factors in his assessment and treatment recommendations.</p>
+                        <div class="team-specialties">
+                            <h4>Specialties:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Medication Management</span>
+                                <span class="specialty-tag">Depression</span>
+                                <span class="specialty-tag">Anxiety Disorders</span>
+                                <span class="specialty-tag">Bipolar Disorder</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section" id="specialists">
+        <div class="container">
+            <h2 class="section-title">Specialized Care Providers</h2>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Dr. Thomas Reynolds Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Dr. Thomas Reynolds, MD</h3>
+                        <span class="team-title">Ketamine Specialist</span>
+                        <p class="team-credentials">Board Certified in Anesthesiology, Specialized Training in Ketamine Therapy</p>
+                        <p class="team-bio">Dr. Reynolds oversees our ketamine therapy program, bringing extensive experience in anesthesiology and ketamine administration. He ensures that all ketamine treatments are delivered safely and effectively, with protocols tailored to each patient's needs.</p>
+                        <p class="team-bio">Having worked with ketamine in both surgical and psychiatric settings, Dr. Reynolds has a unique understanding of its mechanisms and therapeutic potential for treatment-resistant conditions.</p>
+                        <div class="team-specialties">
+                            <h4>Specialties:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Ketamine Infusion Therapy</span>
+                                <span class="specialty-tag">Treatment-Resistant Depression</span>
+                                <span class="specialty-tag">PTSD</span>
+                                <span class="specialty-tag">Chronic Pain</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Emma Lawson Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Emma Lawson, MS, RD, LDN</h3>
+                        <span class="team-title">Nutritional Psychiatry Specialist</span>
+                        <p class="team-credentials">Registered Dietitian, Certified in Nutritional Psychology</p>
+                        <p class="team-bio">Emma specializes in the relationship between nutrition and mental health, helping patients understand how dietary choices can impact mood, cognition, and overall mental wellness. She develops personalized nutrition plans that complement psychiatric treatment.</p>
+                        <p class="team-bio">With advanced training in nutritional approaches to mental health conditions, Emma stays current with the latest research on the gut-brain connection and nutritional interventions for psychiatric disorders.</p>
+                        <div class="team-specialties">
+                            <h4>Specialties:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Nutritional Psychiatry</span>
+                                <span class="specialty-tag">Gut-Brain Connection</span>
+                                <span class="specialty-tag">Anti-inflammatory Diets</span>
+                                <span class="specialty-tag">Food Sensitivities</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Dr. Marcus Lee Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Dr. Marcus Lee, PhD</h3>
+                        <span class="team-title">Neuropsychologist</span>
+                        <p class="team-credentials">Licensed Clinical Psychologist, Board Certified in Neuropsychology</p>
+                        <p class="team-bio">Dr. Lee conducts comprehensive neuropsychological assessments to evaluate cognitive functioning, helping to diagnose conditions like ADHD, learning disorders, and cognitive effects of mental health conditions or treatments.</p>
+                        <p class="team-bio">His detailed assessments provide valuable insights that inform treatment planning and help patients better understand their cognitive strengths and challenges, leading to more targeted and effective interventions.</p>
+                        <div class="team-specialties">
+                            <h4>Specialties:</h4>
+                            <div class="specialty-tags">
+                                <span class="specialty-tag">Neuropsychological Testing</span>
+                                <span class="specialty-tag">ADHD Assessment</span>
+                                <span class="specialty-tag">Learning Disorders</span>
+                                <span class="specialty-tag">Cognitive Rehabilitation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section" id="support">
+        <div class="container">
+            <h2 class="section-title">Support Team</h2>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Jennifer Martinez Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Jennifer Martinez</h3>
+                        <span class="team-title">Patient Care Coordinator</span>
+                        <p class="team-bio">Jennifer is often the first point of contact for new patients, guiding them through the intake process and helping them navigate their care journey. With a background in healthcare administration and a warm, empathetic approach, she ensures that patients feel supported from their first interaction with our practice.</p>
+                        <p class="team-bio">She coordinates appointments, assists with insurance questions, and helps connect patients with the right providers and services to meet their needs.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>David Kim Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">David Kim, RN</h3>
+                        <span class="team-title">Ketamine Therapy Nurse</span>
+                        <p class="team-credentials">Registered Nurse, Certified in IV Therapy</p>
+                        <p class="team-bio">David provides direct patient care during ketamine infusion sessions, monitoring vital signs and ensuring patient comfort and safety throughout the treatment. His calm, reassuring presence helps patients feel at ease during their ketamine therapy.</p>
+                        <p class="team-bio">With specialized training in ketamine administration and experience in both psychiatric and emergency settings, David is well-equipped to support patients through their treatment journey.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">
+                        <div>Sophia Williams Photo</div>
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Sophia Williams</h3>
+                        <span class="team-title">Office Manager</span>
+                        <p class="team-bio">Sophia oversees the day-to-day operations of our practice, ensuring that everything runs smoothly so that our clinical team can focus on providing excellent patient care. She manages scheduling, billing, and administrative processes with efficiency and attention to detail.</p>
+                        <p class="team-bio">With a background in healthcare management and a commitment to creating a positive patient experience, Sophia plays a vital role in maintaining the high standards of service at ReThink Mental Health.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Meet Our Team in Person?</h2>
+                <p>Schedule a consultation to begin your journey with ReThink Mental Health.</p>
+                <a href="contact.html#appointment" class="btn primary-btn">Book an Appointment</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>ReThink Mental Health</h3>
+                    <p>Integrative psychiatry and innovative treatments for lasting wellness.</p>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html#psychiatric">Psychiatric Services</a></li>
+                        <li><a href="services.html#ketamine">Ketamine Therapy</a></li>
+                        <li><a href="services.html#spravato">Spravato Treatment</a></li>
+                        <li><a href="services.html#first-responder">First Responder Care</a></li>
+                        <li><a href="services.html#testing">Testing & Diagnostics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <address>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Healing Way, Denver, CO 80202</p>
+                        <p><i class="fas fa-phone"></i> (303) 555-1234</p>
+                        <p><i class="fas fa-envelope"></i> info@rethinkmentalhealth.com</p>
+                    </address>
+                    <p><strong>Hours:</strong> Monday-Friday: 8am-6pm</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ReThink Mental Health. All rights reserved.</p>
+                <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

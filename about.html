@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about ReThink Mental Health's mission, values, and integrative approach to mental wellness. We're committed to providing innovative, personalized care in Denver, Colorado.">
+    <meta name="keywords" content="Integrative psychiatry, Mental health Denver, About ReThink Mental Health, Mental wellness, Ketamine therapy">
+    <title>About Us | ReThink Mental Health</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles specific to about page */
+        .page-header {
+            background: linear-gradient(rgba(0, 68, 69, 0.8), rgba(0, 68, 69, 0.8)), url('../images/about-header.jpg');
+            background-size: cover;
+            background-position: center;
+            color: var(--neutral-100);
+            padding: var(--spacing-xxl) 0;
+            text-align: center;
+        }
+        
+        .page-header h2 {
+            color: var(--neutral-100);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .about-section {
+            padding: var(--spacing-xxl) 0;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+        
+        .about-content h3 {
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .about-image {
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .value-card {
+            background-color: var(--neutral-200);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .value-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-md);
+        }
+        
+        .value-icon i {
+            font-size: 1.8rem;
+            color: var(--neutral-100);
+        }
+        
+        .value-card h3 {
+            margin-bottom: var(--spacing-sm);
+            color: var(--primary-dark);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: var(--spacing-xl) auto;
+            padding: var(--spacing-md) 0;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary-light);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+        
+        .timeline-item {
+            padding: var(--spacing-md) 0;
+            position: relative;
+            width: 50%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: var(--spacing-xl);
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: var(--spacing-xl);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            border: 4px solid var(--primary-light);
+            border-radius: 50%;
+            top: calc(50% - 10px);
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+        
+        .timeline-content {
+            background-color: var(--neutral-100);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .timeline-content h3 {
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .timeline-year {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: var(--primary-color);
+            color: var(--neutral-100);
+            border-radius: var(--border-radius-sm);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .facility-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .facility-card {
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .facility-image {
+            height: 200px;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neutral-100);
+            font-weight: 600;
+        }
+        
+        .facility-content {
+            padding: var(--spacing-md);
+            background-color: var(--neutral-100);
+        }
+        
+        .facility-content h3 {
+            margin-bottom: var(--spacing-sm);
+            color: var(--primary-dark);
+        }
+        
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 0;
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(odd) {
+                left: 0;
+                padding-right: 0;
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 21px;
+            }
+            
+            .timeline-item:nth-child(odd)::after {
+                right: auto;
+                left: 21px;
+            }
+            
+            .facility-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>ReThink Mental Health</h1>
+                </a>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="services.html">Services <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="services.html#psychiatric">Psychiatric Services</a></li>
+                            <li><a href="services.html#ketamine">Ketamine Therapy</a></li>
+                            <li><a href="services.html#spravato">Spravato Treatment</a></li>
+                            <li><a href="services.html#first-responder">First Responder Care</a></li>
+                            <li><a href="services.html#testing">Testing & Diagnostics</a></li>
+                            <li><a href="services.html#addiction">Addiction Treatment</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="wellness.html">Wellness <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="wellness.html#injections">Wellness Injections</a></li>
+                            <li><a href="wellness.html#nutrition">Nutrition Counseling</a></li>
+                            <li><a href="https://fullscript.com/rethinkmentalhealth" target="_blank">Fullscript</a></li>
+                            <li><a href="https://thorne.com" target="_blank">Thorne</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="team.html">Our Team</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="reviews.html" class="review-btn">Leave a Review</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h2>About ReThink Mental Health</h2>
+            <p>Transforming mental health care through innovation and compassion</p>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title">Our Story</h2>
+                    <p>ReThink Mental Health was founded with a vision to transform mental health care by combining traditional psychiatric approaches with innovative therapies and wellness practices. We recognized that many individuals weren't finding relief through conventional treatments alone, and we set out to create a more comprehensive model of care.</p>
+                    
+                    <p>Our practice began with a focus on providing specialized care for first responders, frontline healthcare workers, and military personnel—communities that face unique mental health challenges. As we grew, we expanded our services to include cutting-edge treatments like ketamine therapy and Spravato, while maintaining our commitment to personalized, evidence-based care for all patients.</p>
+                    
+                    <p>Today, ReThink Mental Health stands as a leader in integrative psychiatry in the Denver area, offering a wide range of services designed to address the full spectrum of mental health needs. We continue to evolve our practice based on the latest research and innovations in the field, always with the goal of providing the most effective care possible.</p>
+                </div>
+                
+                <div class="about-image">
+                    <div class="image-placeholder">Office Building Image</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" style="background-color: var(--neutral-200);">
+        <div class="container">
+            <h2 class="section-title">Our Mission & Vision</h2>
+            
+            <div class="about-grid">
+                <div class="about-image">
+                    <div class="image-placeholder">Team Meeting Image</div>
+                </div>
+                
+                <div class="about-content">
+                    <h3>Mission</h3>
+                    <p>To provide compassionate, innovative, and evidence-based mental health care that addresses the unique needs of each individual, empowering them to achieve lasting wellness and live fulfilling lives.</p>
+                    
+                    <h3>Vision</h3>
+                    <p>We envision a world where mental health care is accessible, effective, and free from stigma—where innovative treatments and integrative approaches are available to all who need them, and where each person's journey to wellness is supported with dignity and respect.</p>
+                    
+                    <h3>Our Approach</h3>
+                    <p>At ReThink Mental Health, we believe in treating the whole person, not just symptoms. Our integrative approach combines:</p>
+                    <ul>
+                        <li>Traditional psychiatric care and medication management</li>
+                        <li>Innovative treatments like ketamine therapy and Spravato</li>
+                        <li>Comprehensive diagnostic testing to identify underlying factors</li>
+                        <li>Nutritional and wellness support</li>
+                        <li>Specialized care for unique populations</li>
+                    </ul>
+                    <p>We work collaboratively with each patient to develop a personalized treatment plan that addresses their specific needs and goals, drawing from our diverse range of services to create the most effective approach.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="container">
+            <h2 class="section-title">Our Core Values</h2>
+            <p class="text-center">These principles guide everything we do at ReThink Mental Health, from patient care to team interactions.</p>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Compassion</h3>
+                    <p>We approach each patient with genuine care, empathy, and understanding, recognizing the courage it takes to seek help.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>We continuously seek out and implement the most effective treatments and approaches, staying at the forefront of mental health care.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Integrity</h3>
+                    <p>We maintain the highest ethical standards in all aspects of our practice, prioritizing patient well-being and safety above all else.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Inclusivity</h3>
+                    <p>We create a welcoming environment for all individuals, respecting diversity in all its forms and tailoring care to each person's unique background and needs.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h3>Education</h3>
+                    <p>We empower patients through knowledge, helping them understand their conditions and treatment options to become active participants in their care.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Collaboration</h3>
+                    <p>We work as a team—with our patients, with each other, and with other healthcare providers—to ensure comprehensive, coordinated care.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" style="background-color: var(--neutral-200);">
+        <div class="container">
+            <h2 class="section-title">Our Journey</h2>
+            <p class="text-center">The evolution of ReThink Mental Health reflects our commitment to innovation and excellence in mental health care.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">2018</span>
+                        <h3>The Beginning</h3>
+                        <p>ReThink Mental Health was founded with a focus on providing specialized mental health care for first responders and healthcare workers.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">2019</span>
+                        <h3>Expanding Services</h3>
+                        <p>We expanded our services to include ketamine therapy and comprehensive diagnostic testing, broadening our approach to treatment-resistant conditions.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">2020</span>
+                        <h3>REMS Certification</h3>
+                        <p>We became a REMS certified center for Spravato administration, adding another innovative treatment option for our patients.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">2021</span>
+                        <h3>Wellness Integration</h3>
+                        <p>We introduced our wellness services, including nutrition counseling and micronutrient injections, embracing a more holistic approach to mental health.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">2022</span>
+                        <h3>New Facility</h3>
+                        <p>We moved to our current location, a purpose-designed facility that provides a healing environment for all our services.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">2023</span>
+                        <h3>Community Outreach</h3>
+                        <p>We launched our community education program, offering workshops and resources to reduce mental health stigma and increase awareness.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">2024</span>
+                        <h3>Research Participation</h3>
+                        <p>We began participating in clinical research to advance the field of mental health and provide our patients with access to cutting-edge treatments.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">2025</span>
+                        <h3>Looking Forward</h3>
+                        <p>We continue to grow and evolve, always seeking new ways to improve our care and better serve our community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="container">
+            <h2 class="section-title">Our Facility</h2>
+            <p class="text-center">Our state-of-the-art facility is designed to provide a calming, therapeutic environment for all our services.</p>
+            
+            <div class="facility-grid">
+                <div class="facility-card">
+                    <div class="facility-image">
+                        <div>Reception Area</div>
+                    </div>
+                    <div class="facility-content">
+                        <h3>Welcoming Reception</h3>
+                        <p>Our warm, inviting reception area is designed to help you feel comfortable from the moment you arrive.</p>
+                    </div>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-image">
+                        <div>Consultation Room</div>
+                    </div>
+                    <div class="facility-content">
+                        <h3>Private Consultation Rooms</h3>
+                        <p>Comfortable, soundproofed rooms ensure privacy and confidentiality during your appointments.</p>
+                    </div>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-image">
+                        <div>Ketamine Treatment Room</div>
+                    </div>
+                    <div class="facility-content">
+                        <h3>Ketamine Treatment Suites</h3>
+                        <p>Specially designed rooms for ketamine therapy with comfortable recliners and calming ambiance.</p>
+                    </div>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-image">
+                        <div>Wellness Room</div>
+                    </div>
+                    <div class="facility-content">
+                        <h3>Wellness Center</h3>
+                        <p>A dedicated space for our wellness services, including micronutrient injections and NAD+ therapy.</p>
+                    </div>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-image">
+                        <div>Testing Lab</div>
+                    </div>
+                    <div class="facility-content">
+                        <h3>Diagnostic Testing Area</h3>
+                        <p>On-site capabilities for various diagnostic tests, making your care more convenient and efficient.</p>
+                    </div>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-image">
+                        <div>Relaxation Space</div>
+                    </div>
+                    <div class="facility-content">
+                        <h3>Relaxation Lounge</h3>
+                        <p>A peaceful space to relax before or after treatments, complete with comfortable seating and calming elements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Experience Our Approach?</h2>
+                <p>We're here to support you on your journey to better mental health.</p>
+                <a href="contact.html#appointment" class="btn primary-btn">Schedule a Consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>ReThink Mental Health</h3>
+                    <p>Integrative psychiatry and innovative treatments for lasting wellness.</p>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html#psychiatric">Psychiatric Services</a></li>
+                        <li><a href="services.html#ketamine">Ketamine Therapy</a></li>
+                        <li><a href="services.html#spravato">Spravato Treatment</a></li>
+                        <li><a href="services.html#first-responder">First Responder Care</a></li>
+                        <li><a href="services.html#testing">Testing & Diagnostics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <address>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Healing Way, Denver, CO 80202</p>
+                        <p><i class="fas fa-phone"></i> (303) 555-1234</p>
+                        <p><i class="fas fa-envelope"></i> info@rethinkmentalhealth.com</p>
+                    </address>
+                    <p><strong>Hours:</strong> Monday-Friday: 8am-6pm</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ReThink Mental Health. All rights reserved.</p>
+                <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
