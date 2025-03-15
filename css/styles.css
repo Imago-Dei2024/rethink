@@ -6,12 +6,12 @@
     --primary-color: #2c7873; /* Teal blue - main brand color */
     --primary-light: #6fb98f; /* Light green - accents */
     --primary-dark: #004445; /* Dark teal - headers and emphasis */
-    
+
     /* Secondary colors */
     --secondary-color: #f2b880; /* Soft orange - call to actions */
     --secondary-light: #ffd8b1; /* Light peach - backgrounds */
     --secondary-dark: #d9853b; /* Dark orange - hover states */
-    
+
     /* Neutrals */
     --neutral-100: #ffffff; /* White */
     --neutral-200: #f8f9fa; /* Off-white */
@@ -22,11 +22,11 @@
     --neutral-700: #495057; /* Dark gray */
     --neutral-800: #343a40; /* Very dark gray */
     --neutral-900: #212529; /* Almost black */
-    
+
     /* Fonts */
     --heading-font: 'Montserrat', sans-serif;
     --body-font: 'Open Sans', sans-serif;
-    
+
     /* Spacing */
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
@@ -34,17 +34,17 @@
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
     --spacing-xxl: 3rem;
-    
+
     /* Border radius */
     --border-radius-sm: 0.25rem;
     --border-radius-md: 0.5rem;
     --border-radius-lg: 1rem;
-    
+
     /* Shadows */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-    
+
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
@@ -657,28 +657,28 @@ address p {
     html {
         font-size: 14px;
     }
-    
+
     .hero h2 {
         font-size: 2.5rem;
     }
-    
+
     .about-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .footer-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .hero-buttons {
         flex-direction: column;
         gap: var(--spacing-md);
     }
-    
+
     .mobile-menu-btn {
         display: block;
     }
-    
+
     nav {
         position: fixed;
         top: 0;
@@ -690,17 +690,17 @@ address p {
         transition: right var(--transition-normal);
         z-index: 1001;
     }
-    
+
     nav.active {
         right: 0;
     }
-    
+
     .main-nav {
         flex-direction: column;
         padding: var(--spacing-xl) var(--spacing-lg);
         gap: var(--spacing-md);
     }
-    
+
     .dropdown-menu {
         position: static;
         opacity: 1;
@@ -711,7 +711,7 @@ address p {
         margin-top: var(--spacing-sm);
         display: none;
     }
-    
+
     .dropdown.active .dropdown-menu {
         display: block;
     }
@@ -721,13 +721,394 @@ address p {
     .feature-grid, .services-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .footer-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .footer-bottom {
         flex-direction: column;
         gap: var(--spacing-sm);
     }
+}
+
+/* ===== NEW UI COMPONENTS ===== */
+
+/* Floating Appointment Button */
+.floating-appointment-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--primary-color);
+    color: var(--neutral-100);
+    border-radius: 50px;
+    font-family: var(--heading-font);
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform var(--transition-normal), background-color var(--transition-normal);
+    cursor: pointer;
+    border: none;
+}
+
+.floating-appointment-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+}
+
+.floating-appointment-btn i {
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.pulse-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50px;
+    background-color: var(--primary-color);
+    opacity: 0.3;
+    z-index: -1;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.2;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+}
+
+/* Enhanced Testimonial Carousel */
+.testimonial-container {
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.testimonial-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.testimonial-card {
+    flex: 0 0 100%;
+    padding: 2rem;
+    background-color: var(--neutral-200);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    margin: 0 1rem;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    transform: scale(0.9);
+}
+
+.testimonial-card.active {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: var(--shadow-md);
+}
+
+.testimonial-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.testimonial-rating {
+    margin-bottom: 1rem;
+    color: #f8b400;
+}
+
+.testimonial-content {
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+}
+
+.testimonial-author-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 1rem;
+    background-color: var(--neutral-300);
+}
+
+.testimonial-author-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.testimonial-author-info h4 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.testimonial-author-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--neutral-600);
+}
+
+.testimonial-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.testimonial-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--neutral-400);
+    margin: 0 0.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.testimonial-dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+}
+
+/* Enhanced Service Cards */
+.service-card-enhanced {
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+    background-color: var(--neutral-100);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--neutral-300);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.service-card-enhanced:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+.service-card-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(111, 185, 143, 0.1) 0%, rgba(44, 120, 115, 0.1) 100%);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.service-card-enhanced:hover::before {
+    opacity: 1;
+}
+
+.service-icon-enhanced {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-light);
+    color: var(--neutral-100);
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.service-card-enhanced:hover .service-icon-enhanced {
+    transform: scale(1.1);
+    background-color: var(--primary-color);
+}
+
+.service-icon-enhanced i {
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.service-card-enhanced:hover .service-icon-enhanced i {
+    transform: rotate(360deg);
+}
+
+.service-card-enhanced h3 {
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+.service-card-enhanced:hover h3 {
+    color: var(--primary-color);
+}
+
+.service-card-enhanced p {
+    color: var(--neutral-600);
+    margin-bottom: 1.5rem;
+}
+
+.service-link-enhanced {
+    display: flex;
+    align-items: center;
+    color: var(--primary-color);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.service-card-enhanced:hover .service-link-enhanced {
+    transform: translateX(5px);
+}
+
+.service-link-enhanced i {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.service-card-enhanced:hover .service-link-enhanced i {
+    transform: translateX(3px);
+}
+
+/* Modern FAQ Accordion */
+.faq-accordion {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.faq-accordion-title {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.faq-accordion-title h2 {
+    font-size: 2rem;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+}
+
+.faq-accordion-title p {
+    color: var(--neutral-600);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--neutral-300);
+    overflow: hidden;
+    background-color: var(--neutral-100);
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+}
+
+.faq-question {
+    position: relative;
+    padding: 1.25rem;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.faq-question::after {
+    content: '\f078';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-question {
+    background-color: var(--neutral-200);
+}
+
+.faq-item.active .faq-question::after {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+    padding: 0 1.25rem;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    padding: 0 1.25rem 1.25rem;
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: var(--neutral-100);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-to-top:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+}
+
+.scroll-to-top i {
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+.scroll-to-top:hover i {
+    transform: translateY(-3px);
+}
+
+/* Adjust floating appointment button position when scroll-to-top is visible */
+.floating-appointment-btn {
+    bottom: 5rem;
 }
