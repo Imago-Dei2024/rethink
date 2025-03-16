@@ -15,12 +15,13 @@ export default function AboutPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoError, setVideoError] = useState<string | null>(null);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    console.log('Setting up video with source:', '/Empower-Adobe.mov');
+    console.log('Setting up video with source:', '/4K-Adobe.mov');
 
     const handleError = (e: any) => {
       console.error('Video error:', e);
@@ -45,17 +46,37 @@ export default function AboutPage() {
       if (playPromise !== undefined) {
         playPromise.then(() => {
           console.log('Video playback started successfully');
+          setIsVideoPlaying(true);
         }).catch(error => {
           console.error('Playback failed:', error);
-          // If autoplay fails, show a play button
+          setIsVideoPlaying(false);
           setVideoError('Click to play video');
         });
+      }
+    };
+
+    const handlePlaying = () => {
+      setIsVideoPlaying(true);
+      setIsVideoLoading(false);
+      setVideoError(null);
+    };
+
+    const handleWaiting = () => {
+      setIsVideoLoading(true);
+    };
+
+    const handleStalled = () => {
+      if (!isVideoPlaying) {
+        setVideoError('Video stalled. Click to try again.');
       }
     };
 
     video.addEventListener('error', handleError);
     video.addEventListener('loadstart', handleLoadStart);
     video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('playing', handlePlaying);
+    video.addEventListener('waiting', handleWaiting);
+    video.addEventListener('stalled', handleStalled);
 
     // Try to load the video
     try {
@@ -71,21 +92,38 @@ export default function AboutPage() {
       video.removeEventListener('error', handleError);
       video.removeEventListener('loadstart', handleLoadStart);
       video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('playing', handlePlaying);
+      video.removeEventListener('waiting', handleWaiting);
+      video.removeEventListener('stalled', handleStalled);
     };
-  }, []);
+  }, [isVideoPlaying]);
 
   const handleVideoClick = () => {
-    if (videoRef.current && videoError) {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (videoError || !isVideoPlaying) {
+      setIsVideoLoading(true);
+      setVideoError(null);
+
       // Try to reload and play the video
       try {
-        videoRef.current.load();
-        videoRef.current.play().catch(error => {
-          console.error('Manual play failed:', error);
-          setVideoError('Video playback failed. Please try again.');
-        });
+        video.load();
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            setIsVideoPlaying(true);
+            setIsVideoLoading(false);
+          }).catch(error => {
+            console.error('Manual play failed:', error);
+            setVideoError('Video playback failed. Please try again.');
+            setIsVideoPlaying(false);
+          });
+        }
       } catch (error) {
         console.error('Video reload error:', error);
         setVideoError('Error loading video. Please refresh the page.');
+        setIsVideoPlaying(false);
       }
     }
   };
@@ -135,26 +173,27 @@ export default function AboutPage() {
         {/* Hero Section with Video */}
         <section className="relative h-screen overflow-hidden">
           <div
-            className="absolute inset-0 bg-[#B5B5A7] bg-gradient-to-b from-teal-700 to-teal-600"
+            className="absolute inset-0 bg-gradient-to-b from-teal-700 to-teal-600"
             onClick={handleVideoClick}
-            style={{ cursor: videoError ? 'pointer' : 'default' }}
+            style={{ cursor: (videoError || !isVideoPlaying) ? 'pointer' : 'default' }}
           >
             <video
               ref={videoRef}
-              className="absolute inset-0 w-full h-full object-cover opacity-90"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isVideoPlaying ? 'opacity-90' : 'opacity-0'}`}
               playsInline
               autoPlay
               muted
               loop
               preload="metadata"
             >
-              <source src="/Empower-Adobe.mov" type="video/quicktime" />
+              <source src="/4K-Adobe.mov" type="video/quicktime" />
+              <source src="/4K-Adobe.mov" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
 
             {isVideoLoading && (
               <motion.div
-                className="absolute inset-0 flex items-center justify-center bg-[#B5B5A7]/50"
+                className="absolute inset-0 flex items-center justify-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
@@ -167,7 +206,7 @@ export default function AboutPage() {
 
             {videoError && (
               <motion.div
-                className="absolute inset-0 flex items-center justify-center bg-[#B5B5A7]/50"
+                className="absolute inset-0 flex items-center justify-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
