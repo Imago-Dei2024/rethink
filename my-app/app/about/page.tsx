@@ -26,22 +26,23 @@ export default function AboutPage() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
 
+  const handleError = (e: any) => {
+    console.error('Video error:', e);
+    const video = videoRef.current;
+    if (video?.error) {
+      console.error('Video error details:', {
+        code: video.error.code,
+        message: video.error.message
+      });
+    }
+    setVideoError('Error loading video');
+    setIsVideoLoading(false);
+    setIsVideoPlaying(false);
+  };
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
-    const handleError = (e: any) => {
-      console.error('Video error:', e);
-      if (video.error) {
-        console.error('Video error details:', {
-          code: video.error.code,
-          message: video.error.message
-        });
-      }
-      setVideoError('Error loading video');
-      setIsVideoLoading(false);
-      setIsVideoPlaying(false);
-    };
 
     const handleLoadStart = () => {
       console.log('Video load started');
@@ -160,15 +161,21 @@ export default function AboutPage() {
             {/* Video */}
             <video
               ref={videoRef}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoPlaying ? 'opacity-50' : 'opacity-0'}`}
-              playsInline
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                isVideoPlaying ? 'opacity-100' : 'opacity-0'
+              }`}
               autoPlay
               muted
               loop
-              preload="auto"
+              playsInline
+              onPlaying={() => setIsVideoPlaying(true)}
+              onWaiting={() => setIsVideoPlaying(false)}
+              onStalled={() => setIsVideoPlaying(false)}
+              onError={handleError}
             >
-              <source src="/Police-Adobe.mov" type="video/quicktime" />
-              <source src="/Nurse-Adobe.mov" type="video/quicktime" />
+              <source src="/Empower-Adobe.mov" type="video/quicktime" />
+              <source src="/videos/empower.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
             </video>
 
             {/* Loading Indicator */}
@@ -204,7 +211,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="backdrop-blur-sm bg-black/20 p-8 md:p-12 rounded-2xl"
+              className="p-8 md:p-12"
             >
               <h1 className="text-6xl md:text-7xl font-bold text-white mb-8 tracking-tight">
                 Our Story
