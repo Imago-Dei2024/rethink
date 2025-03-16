@@ -185,9 +185,11 @@ export default function AboutPage() {
               muted
               loop
               preload="metadata"
+              poster="/poster-image.jpg"
             >
               <source src="/4K-Adobe.mov" type="video/quicktime" />
-              <source src="/4K-Adobe.mov" type="video/mp4" />
+              <source src="/4K-Adobe.mp4" type="video/mp4" />
+              <source src="/4K-Adobe-low.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
 
