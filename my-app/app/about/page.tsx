@@ -16,6 +16,7 @@ export default function AboutPage() {
   const [videoError, setVideoError] = useState<string | null>(null);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [hasAttemptedPlay, setHasAttemptedPlay] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -31,39 +32,78 @@ export default function AboutPage() {
 
     const handleError = (e: any) => {
       console.error('Video error:', e);
-      setVideoError(null); // Don't show error to user, just fallback gracefully
+      if (video.error) {
+        console.error('Video error details:', {
+          code: video.error.code,
+          message: video.error.message
+        });
+      }
+      setVideoError('Error loading video');
       setIsVideoLoading(false);
       setIsVideoPlaying(false);
     };
 
     const handleLoadStart = () => {
+      console.log('Video load started');
       setIsVideoLoading(true);
+      setVideoError(null);
     };
 
     const handleCanPlay = () => {
+      console.log('Video can play');
       setIsVideoLoading(false);
-      video.play().catch(() => {
-        setIsVideoPlaying(false);
-      });
+      if (!hasAttemptedPlay) {
+        setHasAttemptedPlay(true);
+        video.play().catch(error => {
+          console.error('Video play error:', error);
+          setVideoError('Error playing video');
+          setIsVideoPlaying(false);
+        });
+      }
     };
 
     const handlePlaying = () => {
+      console.log('Video is playing');
       setIsVideoPlaying(true);
       setIsVideoLoading(false);
+      setVideoError(null);
+    };
+
+    const handleStalled = () => {
+      console.log('Video stalled');
+      setIsVideoLoading(true);
+    };
+
+    const handleWaiting = () => {
+      console.log('Video buffering');
+      setIsVideoLoading(true);
     };
 
     video.addEventListener('error', handleError);
     video.addEventListener('loadstart', handleLoadStart);
     video.addEventListener('canplay', handleCanPlay);
     video.addEventListener('playing', handlePlaying);
+    video.addEventListener('stalled', handleStalled);
+    video.addEventListener('waiting', handleWaiting);
+
+    // Try to load the video
+    try {
+      video.load();
+    } catch (error) {
+      console.error('Video load error:', error);
+      setVideoError('Error loading video');
+      setIsVideoLoading(false);
+    }
 
     return () => {
       video.removeEventListener('error', handleError);
       video.removeEventListener('loadstart', handleLoadStart);
       video.removeEventListener('canplay', handleCanPlay);
       video.removeEventListener('playing', handlePlaying);
+      video.removeEventListener('stalled', handleStalled);
+      video.removeEventListener('waiting', handleWaiting);
     };
-  }, []);
+  }, [hasAttemptedPlay]);
 
   const values = [
     {
@@ -127,11 +167,12 @@ export default function AboutPage() {
               loop
               preload="auto"
             >
-              <source src="/River-Adobe.mov" type="video/quicktime" />
+              <source src="/Police-Adobe.mov" type="video/quicktime" />
+              <source src="/Nurse-Adobe.mov" type="video/quicktime" />
             </video>
 
             {/* Loading Indicator */}
-            {isVideoLoading && (
+            {isVideoLoading && !videoError && (
               <motion.div
                 className="absolute inset-0 flex items-center justify-center"
                 initial={{ opacity: 0 }}
@@ -139,6 +180,20 @@ export default function AboutPage() {
                 transition={{ duration: 0.5 }}
               >
                 <div className="w-16 h-16 border-4 border-white/20 border-t-white/80 rounded-full animate-spin" />
+              </motion.div>
+            )}
+
+            {/* Error Message */}
+            {videoError && (
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="text-white/80 text-lg bg-black/20 backdrop-blur-sm px-6 py-3 rounded-lg">
+                  {videoError}
+                </div>
               </motion.div>
             )}
           </div>
