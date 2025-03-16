@@ -31,140 +31,39 @@ export default function AboutPage() {
 
     const handleError = (e: any) => {
       console.error('Video error:', e);
-      if (video.error) {
-        console.error('Video error details:', {
-          code: video.error.code,
-          message: video.error.message,
-          name: video.error.name
-        });
-      }
-      setVideoError('Error loading video. Click to try again.');
+      setVideoError(null); // Don't show error to user, just fallback gracefully
       setIsVideoLoading(false);
       setIsVideoPlaying(false);
     };
 
     const handleLoadStart = () => {
-      console.log('Video load started');
       setIsVideoLoading(true);
-      setVideoError(null);
-    };
-
-    const handleLoadedMetadata = () => {
-      console.log('Video metadata loaded');
-      setIsVideoLoading(false);
     };
 
     const handleCanPlay = () => {
-      console.log('Video can play');
       setIsVideoLoading(false);
-      setVideoError(null);
-
-      try {
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              console.log('Video playing successfully');
-              setIsVideoPlaying(true);
-            })
-            .catch(error => {
-              console.error('Video play error:', error);
-              setVideoError('Click to play video');
-              setIsVideoPlaying(false);
-            });
-        }
-      } catch (error) {
-        console.error('Video play error:', error);
-        setVideoError('Click to play video');
+      video.play().catch(() => {
         setIsVideoPlaying(false);
-      }
+      });
     };
 
     const handlePlaying = () => {
-      console.log('Video is playing');
       setIsVideoPlaying(true);
       setIsVideoLoading(false);
-      setVideoError(null);
-    };
-
-    const handleStalled = () => {
-      console.log('Video stalled');
-      setIsVideoLoading(true);
-    };
-
-    const handleWaiting = () => {
-      console.log('Video buffering');
-      setIsVideoLoading(true);
     };
 
     video.addEventListener('error', handleError);
     video.addEventListener('loadstart', handleLoadStart);
-    video.addEventListener('loadedmetadata', handleLoadedMetadata);
     video.addEventListener('canplay', handleCanPlay);
     video.addEventListener('playing', handlePlaying);
-    video.addEventListener('stalled', handleStalled);
-    video.addEventListener('waiting', handleWaiting);
-
-    // Force load the video
-    try {
-      video.load();
-    } catch (error) {
-      console.error('Video load error:', error);
-    }
 
     return () => {
       video.removeEventListener('error', handleError);
       video.removeEventListener('loadstart', handleLoadStart);
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
       video.removeEventListener('canplay', handleCanPlay);
       video.removeEventListener('playing', handlePlaying);
-      video.removeEventListener('stalled', handleStalled);
-      video.removeEventListener('waiting', handleWaiting);
     };
   }, []);
-
-  const handleVideoClick = () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    console.log('Video clicked, current state:', {
-      error: videoError,
-      isPlaying: isVideoPlaying,
-      readyState: video.readyState,
-      networkState: video.networkState,
-      paused: video.paused,
-      ended: video.ended
-    });
-
-    if (videoError || !isVideoPlaying) {
-      setIsVideoLoading(true);
-      setVideoError(null);
-
-      try {
-        video.load();
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              console.log('Video playing after click');
-              setIsVideoPlaying(true);
-              setIsVideoLoading(false);
-            })
-            .catch(error => {
-              console.error('Video play error after click:', error);
-              setVideoError('Video playback failed. Please try again.');
-              setIsVideoPlaying(false);
-              setIsVideoLoading(false);
-            });
-        }
-      } catch (error) {
-        console.error('Video interaction error:', error);
-        setVideoError('Error playing video. Please try again.');
-        setIsVideoPlaying(false);
-        setIsVideoLoading(false);
-      }
-    }
-  };
 
   const values = [
     {
@@ -213,44 +112,44 @@ export default function AboutPage() {
           className="relative h-screen overflow-hidden"
           style={{ opacity, scale }}
         >
-          <div
-            className="absolute inset-0 bg-gradient-to-b from-teal-900/90 to-teal-800/90"
-            onClick={handleVideoClick}
-            style={{ cursor: (videoError || !isVideoPlaying) ? 'pointer' : 'default' }}
-          >
+          {/* Background with Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-900 via-teal-800 to-teal-900">
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
+
+            {/* Video */}
             <video
               ref={videoRef}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoPlaying ? 'opacity-75' : 'opacity-0'}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoPlaying ? 'opacity-50' : 'opacity-0'}`}
               playsInline
               autoPlay
               muted
               loop
               preload="auto"
             >
-              <source src="/4K-Adobe.mov" type="video/quicktime" />
               <source src="/River-Adobe.mov" type="video/quicktime" />
-              Your browser does not support the video tag.
             </video>
 
-            {(isVideoLoading || videoError) && (
+            {/* Loading Indicator */}
+            {isVideoLoading && (
               <motion.div
                 className="absolute inset-0 flex items-center justify-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="text-white text-xl bg-black/40 backdrop-blur-sm px-8 py-4 rounded-lg">
-                  {videoError || 'Loading video...'}
-                </div>
+                <div className="w-16 h-16 border-4 border-white/20 border-t-white/80 rounded-full animate-spin" />
               </motion.div>
             )}
           </div>
 
+          {/* Content */}
           <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
+              className="backdrop-blur-sm bg-black/20 p-8 md:p-12 rounded-2xl"
             >
               <h1 className="text-6xl md:text-7xl font-bold text-white mb-8 tracking-tight">
                 Our Story
@@ -263,6 +162,7 @@ export default function AboutPage() {
             </motion.div>
           </div>
 
+          {/* Bottom Gradient */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
         </motion.section>
 
