@@ -31,50 +31,138 @@ export default function AboutPage() {
 
     const handleError = (e: any) => {
       console.error('Video error:', e);
+      if (video.error) {
+        console.error('Video error details:', {
+          code: video.error.code,
+          message: video.error.message,
+          name: video.error.name
+        });
+      }
       setVideoError('Error loading video. Click to try again.');
       setIsVideoLoading(false);
+      setIsVideoPlaying(false);
     };
 
     const handleLoadStart = () => {
+      console.log('Video load started');
       setIsVideoLoading(true);
       setVideoError(null);
     };
 
+    const handleLoadedMetadata = () => {
+      console.log('Video metadata loaded');
+      setIsVideoLoading(false);
+    };
+
     const handleCanPlay = () => {
+      console.log('Video can play');
       setIsVideoLoading(false);
       setVideoError(null);
-      video.play().catch(() => {
+
+      try {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log('Video playing successfully');
+              setIsVideoPlaying(true);
+            })
+            .catch(error => {
+              console.error('Video play error:', error);
+              setVideoError('Click to play video');
+              setIsVideoPlaying(false);
+            });
+        }
+      } catch (error) {
+        console.error('Video play error:', error);
         setVideoError('Click to play video');
-      });
+        setIsVideoPlaying(false);
+      }
     };
 
     const handlePlaying = () => {
+      console.log('Video is playing');
       setIsVideoPlaying(true);
       setIsVideoLoading(false);
       setVideoError(null);
     };
 
+    const handleStalled = () => {
+      console.log('Video stalled');
+      setIsVideoLoading(true);
+    };
+
+    const handleWaiting = () => {
+      console.log('Video buffering');
+      setIsVideoLoading(true);
+    };
+
     video.addEventListener('error', handleError);
     video.addEventListener('loadstart', handleLoadStart);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
     video.addEventListener('canplay', handleCanPlay);
     video.addEventListener('playing', handlePlaying);
+    video.addEventListener('stalled', handleStalled);
+    video.addEventListener('waiting', handleWaiting);
+
+    // Force load the video
+    try {
+      video.load();
+    } catch (error) {
+      console.error('Video load error:', error);
+    }
 
     return () => {
       video.removeEventListener('error', handleError);
       video.removeEventListener('loadstart', handleLoadStart);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
       video.removeEventListener('canplay', handleCanPlay);
       video.removeEventListener('playing', handlePlaying);
+      video.removeEventListener('stalled', handleStalled);
+      video.removeEventListener('waiting', handleWaiting);
     };
   }, []);
 
   const handleVideoClick = () => {
-    if (!videoRef.current) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    console.log('Video clicked, current state:', {
+      error: videoError,
+      isPlaying: isVideoPlaying,
+      readyState: video.readyState,
+      networkState: video.networkState,
+      paused: video.paused,
+      ended: video.ended
+    });
+
     if (videoError || !isVideoPlaying) {
-      videoRef.current.load();
-      videoRef.current.play().catch(error => {
-        console.error('Video playback failed:', error);
-        setVideoError('Video playback failed. Please try again.');
-      });
+      setIsVideoLoading(true);
+      setVideoError(null);
+
+      try {
+        video.load();
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log('Video playing after click');
+              setIsVideoPlaying(true);
+              setIsVideoLoading(false);
+            })
+            .catch(error => {
+              console.error('Video play error after click:', error);
+              setVideoError('Video playback failed. Please try again.');
+              setIsVideoPlaying(false);
+              setIsVideoLoading(false);
+            });
+        }
+      } catch (error) {
+        console.error('Video interaction error:', error);
+        setVideoError('Error playing video. Please try again.');
+        setIsVideoPlaying(false);
+        setIsVideoLoading(false);
+      }
     }
   };
 
@@ -137,11 +225,10 @@ export default function AboutPage() {
               autoPlay
               muted
               loop
-              preload="metadata"
-              poster="/poster-image.jpg"
+              preload="auto"
             >
               <source src="/4K-Adobe.mov" type="video/quicktime" />
-              <source src="/4K-Adobe.mp4" type="video/mp4" />
+              <source src="/River-Adobe.mov" type="video/quicktime" />
               Your browser does not support the video tag.
             </video>
 
