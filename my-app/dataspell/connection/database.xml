@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="mental_health_portal@localhost" uuid="your-uuid-here">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/mental_health_portal</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <user-name>postgres</user-name>
+      <password>password</password>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-additional-properties>
+        <property name="ApplicationName" value="DataSpell" />
+      </jdbc-additional-properties>
+    </data-source>
+  </component>
+</project>
