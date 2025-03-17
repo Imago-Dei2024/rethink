@@ -10,6 +10,7 @@ import { Lightbulb, Heart, Star, Target, Compass, Shield } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { transitions } from '@/lib/utils';
 import Image from 'next/image';
+import { HorizontalTimelineSlider } from '@/components/ui/horizontal-timeline-slider';
 
 export default function AboutPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -261,7 +262,7 @@ export default function AboutPage() {
                   <motion.div
                     className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
                     whileHover={{ y: -5 }}
-                    transition={transitions.spring}
+                    transition={transitions.bounce}
                   >
                     <div className="bg-teal-50 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
                       {value.icon}
@@ -275,43 +276,61 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Journey Section */}
+        {/* Our Journey Timeline Section */}
         <section className="py-24 px-4 bg-white">
           <div className="max-w-7xl mx-auto">
             <RevealAnimation type="fade">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-16 text-center">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-center">
                 Our Journey
               </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12 text-center">
+                Explore the key milestones in our history as we've grown to become a leading mental health provider in Colorado.
+              </p>
             </RevealAnimation>
-
-            <div className="space-y-12">
-              <RevealAnimation type="slide" direction="up" delay={0.1}>
-                <div className="bg-gradient-to-r from-teal-50 to-teal-100 p-8 md:p-12 rounded-2xl shadow-lg">
-                  <h3 className="text-2xl font-semibold text-teal-900 mb-4">Our Beginning</h3>
-                  <p className="text-lg text-gray-800 leading-relaxed">
-                    ReThink Mental Health was founded by Karen Laber, PMHNP-BC, with a vision to transform mental health care in the Denver area. After years of working in traditional psychiatric settings, Karen recognized the need for a more integrative approach that addressed not just symptoms, but the underlying factors contributing to mental health challenges.
-                  </p>
-                </div>
-              </RevealAnimation>
-
-              <RevealAnimation type="slide" direction="up" delay={0.2}>
-                <div className="bg-gradient-to-r from-teal-50 to-teal-100 p-8 md:p-12 rounded-2xl shadow-lg">
-                  <h3 className="text-2xl font-semibold text-teal-900 mb-4">Our Growth</h3>
-                  <p className="text-lg text-gray-800 leading-relaxed">
-                    In 2018, ReThink Mental Health opened its doors with a commitment to providing personalized, comprehensive care that combines conventional psychiatric treatments with complementary therapies. Our practice has grown to include a team of dedicated professionals who share a passion for helping individuals achieve optimal mental wellness.
-                  </p>
-                </div>
-              </RevealAnimation>
-
-              <RevealAnimation type="slide" direction="up" delay={0.3}>
-                <div className="bg-gradient-to-r from-teal-50 to-teal-100 p-8 md:p-12 rounded-2xl shadow-lg">
-                  <h3 className="text-2xl font-semibold text-teal-900 mb-4">Today</h3>
-                  <p className="text-lg text-gray-800 leading-relaxed">
-                    Today, ReThink Mental Health is known for its innovative approaches to treating complex mental health conditions, including our specialized programs for first responders, veterans, and individuals with treatment-resistant depression. We continue to evolve our practice based on the latest research and best practices in integrative psychiatry.
-                  </p>
-                </div>
-              </RevealAnimation>
-            </div>
+            
+            <RevealAnimation type="fade">
+              <div className="bg-gray-50 p-6 md:p-10 rounded-2xl shadow-md">
+                <HorizontalTimelineSlider 
+                  items={[
+                    {
+                      year: "2018",
+                      title: "ReThink Mental Health Opens Its Doors",
+                      description: "Founded by Karen Laber, PMHNP-BC, ReThink Mental Health began with a vision to transform mental health care in the Denver area. We opened our first office with a commitment to providing personalized, comprehensive care that combines conventional psychiatric treatments with complementary therapies."
+                    },
+                    {
+                      year: "2019",
+                      title: "Expanding Our Services",
+                      description: "We introduced specialized programs for first responders and veterans, recognizing the unique mental health challenges faced by these communities. Our team grew to include additional specialists dedicated to trauma-informed care."
+                    },
+                    {
+                      year: "2020",
+                      title: "Adapting to New Challenges",
+                      description: "In response to the global pandemic, we quickly pivoted to offer telehealth services, ensuring continuous care for our patients during uncertain times. This expansion of our service model allowed us to reach more individuals in need."
+                    },
+                    {
+                      year: "2021",
+                      title: "Milestone: 500+ Patients",
+                      description: "We celebrated serving over 500 patients, a testament to our growing reputation for quality care and effective treatment approaches. Our patient community continued to grow through referrals and positive outcomes."
+                    },
+                    {
+                      year: "2022",
+                      title: "New Office Location",
+                      description: "To accommodate our growing practice, we moved into a larger, more modern facility designed specifically for mental health care. The new space features comfortable therapy rooms, advanced treatment areas, and a welcoming environment for all patients."
+                    },
+                    {
+                      year: "2023",
+                      title: "Innovative Treatment Programs",
+                      description: "We expanded our treatment offerings to include cutting-edge approaches for treatment-resistant conditions, further establishing ReThink as a leader in comprehensive mental health care in Colorado."
+                    },
+                    {
+                      year: "Today",
+                      title: "Continuing Our Mission",
+                      description: "ReThink Mental Health continues to evolve and grow, always guided by our core mission of providing personalized, effective mental health care that empowers individuals on their journey to wellness."
+                    }
+                  ]}
+                />
+              </div>
+            </RevealAnimation>
           </div>
         </section>
 
@@ -326,7 +345,7 @@ export default function AboutPage() {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                transition={transitions.spring}
+                transition={transitions.bounce}
               >
                 <Link
                   href="/team"

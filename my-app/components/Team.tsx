@@ -50,49 +50,79 @@ const teamMembers: TeamMember[] = [
     name: "Lilly",
     title: "Therapy Dog",
     bio: "Lilly is ReThink Mental Health and Wellness' resident therapy dog in training. She is certain that she is actually the Office Manager, door greeter, couch warmer, and generally in charge of all things. She is eagerly working on her service dog training and certification. During your appointment, you will likely meet her in our waiting room with one of her stuffed animals or patrolling the halls looking for someone to give hugs and kisses to! She will frequently present her beloved toys to you as a friendship gesture when you arrive. She joins Karen during client sessions and helps provide stress relief and comfort to clients. She especially loves to give hugs with her fluffy paws. She has the gift of \"lying puppy dog eyes\", which she uses to make others believe she is in need of food and lacking attention. We assure you, she is fed and spoiled, so don't believe her!",
-    image: "/team/lilly.jpg"
+    image: "/team/lilly.jpg",
+    specialties: ["Therapy Support", "Stress Relief", "Emotional Comfort", "Office Morale"]
   }
 ];
 
 const Team = () => {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
+  // Filter team members into two groups
+  const clinicalTeam = teamMembers.filter(member => 
+    ["Karen Laber", "Erin Webb", "Jackie Ewer"].includes(member.name)
+  );
+  
+  const supportTeam = teamMembers.filter(member => 
+    ["Brooklyne Armbruster", "Lilly"].includes(member.name)
+  );
+
+  // Reusable team member card component
+  const TeamMemberCard = ({ member }: { member: TeamMember }) => (
+    <div
+      key={member.id}
+      className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
+      onClick={() => setSelectedMember(member)}
+    >
+      <div className="relative w-full pt-[100%] bg-gray-200 overflow-hidden">
+        <Image 
+          src={member.image} 
+          alt={member.name}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+      </div>
+      <div className="p-6">
+        <h3 className="text-xl font-semibold text-teal-700">{member.name}</h3>
+        <p className="text-orange-400 font-medium mb-2">{member.title}</p>
+        <p className="text-gray-600 mb-4 line-clamp-3">{member.bio}</p>
+        <button
+          className="text-teal-700 font-medium hover:text-teal-800"
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectedMember(member);
+          }}
+        >
+          View Profile
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12 text-teal-700">Meet Our Team</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {teamMembers.map((member) => (
-            <div
-              key={member.id}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
-              onClick={() => setSelectedMember(member)}
-            >
-              <div className="aspect-w-1 aspect-h-1 w-full bg-gray-200">
-                {/* Replace with actual images when available */}
-                <div className="w-full h-64 bg-gray-300 flex items-center justify-center">
-                  <span className="text-gray-600">
-                    {member.name.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-teal-700">{member.name}</h3>
-                <p className="text-orange-400 font-medium mb-2">{member.title}</p>
-                <p className="text-gray-600 mb-4 line-clamp-3">{member.bio}</p>
-                <button
-                  className="text-teal-700 font-medium hover:text-teal-800"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedMember(member);
-                  }}
-                >
-                  View Profile
-                </button>
-              </div>
-            </div>
-          ))}
+        
+        {/* Clinical Team Section */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-semibold text-teal-700 mb-8 text-center">Clinical Team</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {clinicalTeam.map((member) => (
+              <TeamMemberCard key={member.id} member={member} />
+            ))}
+          </div>
+        </div>
+        
+        {/* Support Team Section */}
+        <div>
+          <h3 className="text-2xl font-semibold text-teal-700 mb-8 text-center">Office Administration & Support</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+            {supportTeam.map((member) => (
+              <TeamMemberCard key={member.id} member={member} />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -118,13 +148,14 @@ const Team = () => {
 
               <div className="md:flex">
                 <div className="md:w-1/3 mb-4 md:mb-0">
-                  <div className="aspect-w-1 aspect-h-1 w-full bg-gray-200 rounded-lg overflow-hidden">
-                    {/* Replace with actual image when available */}
-                    <div className="w-full h-64 bg-gray-300 flex items-center justify-center">
-                      <span className="text-gray-600 text-4xl">
-                        {selectedMember.name.split(' ').map(n => n[0]).join('')}
-                      </span>
-                    </div>
+                  <div className="relative w-full pt-[100%] bg-gray-200 rounded-lg overflow-hidden">
+                    <Image 
+                      src={selectedMember.image} 
+                      alt={selectedMember.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
                   </div>
                 </div>
                 <div className="md:w-2/3 md:pl-6">
